@@ -1,0 +1,33 @@
+<div class="columns is-multiline">
+    <% checklists.forEach((checklist)=>{ %>
+        <div class="column is-one-quarter">
+        <div class="card has-background-white-ter">
+            <div class="card-content">
+            <p class="subtitle is-size-5">
+                <%= checklist.name%>
+            </p>
+            <p class="subtitle is-size-6">
+                <%= checklist.tasks.length %>
+            </p>
+            </div>
+            <footer class="card-footer">
+            <p class="card-footer-item">
+                <span>
+                <a href="/checklist/show/<%= checklist._id %>">Ver</a>
+                </span>
+            </p>
+            <p class="card-footer-item">
+                <span>
+                <a href="/checklist/edit/<%= checklist._id %>">Editar</a>
+                </span>
+            </p>
+            <p class="card-footer-item">
+                <span>
+                <a href="/checklist/<%= checklist._id %>/?_method=delete" class="has-text-danger">Remover</a>
+                </span>
+            </p>
+            </footer>
+        </div>
+        </div>
+    <% }) %>
+  </div>

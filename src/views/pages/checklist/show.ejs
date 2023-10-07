@@ -1,0 +1,32 @@
+<%- include('../../layouts/header') %>
+<%- include('../../layouts/menu') %>
+<section class="section">
+    <div class="container">
+      <div class="columns">
+        <div class="column is-four-fifths">
+          <h1 class="title size-4">Minha lista de tarefas</h1>
+        </div>
+        <div class="column is-one-fifth">
+          <a href="/checklist/<%=checklist._id%>/task/new" class="button is-success is-small">Nova Tarefa</a>
+          <a href="index.html" class="button is-small">Voltar</a>
+        </div>
+      </div>
+
+      <hr />
+      <% if(checklist.tasks.length > 0 ) { checklist.tasks.forEach((task)=>{%>
+      <div class="columns">
+        <div class="column is-four-fifths">
+          <input type="checkbox" /> <%=task.name%>
+        </div>
+
+        <div class="column is-one-fifth">
+          <a href="/task/<%=task._id%>?_method=delete" class="button is-danger is-small">Remover</a>
+        </div>
+      </div>
+      <%})}else { %>
+      <p>Sem Tarefa</p>
+      <% } %>
+
+    </div>
+  </section>
+<%- include('../../layouts/footer')%>

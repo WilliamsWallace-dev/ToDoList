@@ -1,0 +1,17 @@
+      <form method= "post" action= "<%= url %>" >
+        <!-- <p><%= url %></p> -->
+        <div class="field">
+          <label class="label">Nome</label>
+          <div class="control">
+            <% if(type == "checklist") { %>
+            <input class="input" type="text" name="checklist[name]" placeholder="Lista de Tarefas" value="<%=checklist.name%>">
+            <% } else if(type == "task")  { %>
+              <input class="input" type="text" name="task[name]" placeholder="Lista de Tarefas"">
+            <% }%> 
+	          <p class="is-danger help">Name should be present</p>
+          </div>
+        </div>
+
+        <button type="submit" class="button is-success">Salvar</button>
+        <a href="/checklist" class="button">Cancelar</a>
+      </form>
