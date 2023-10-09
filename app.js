@@ -2,6 +2,7 @@ const express = require('express')
 require('./config/database')
 
 
+
 const path = require('path')
 const methodOverride = require('method-override')
 
@@ -42,9 +43,9 @@ app.use('/checklist',taskRouter.checklistDepedent)
 app.use('/task',taskRouter.router)
 
 
-
-app.listen(3000,()=>{
-    console.log('O servidor foi inicializado')
+const port = process.env.PORT || 3000
+app.listen(port,()=>{
+    console.log(`O Servidor está rodando na porta ${port}`)
 })
 
 
