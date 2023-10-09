@@ -8,7 +8,9 @@
             <% } else if(type == "task")  { %>
               <input class="input" type="text" name="task[name]" placeholder="Lista de Tarefas"">
             <% }%> 
+            <% if(errors) { %>
 	          <p class="is-danger help">Name should be present</p>
+            <% } %>
           </div>
         </div>
 

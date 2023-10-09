@@ -8,15 +8,15 @@
         </div>
         <div class="column is-one-fifth">
           <a href="/checklist/<%=checklist._id%>/task/new" class="button is-success is-small">Nova Tarefa</a>
-          <a href="index.html" class="button is-small">Voltar</a>
+          <a href="/checklist" class="button is-small">Voltar</a>
         </div>
       </div>
 
       <hr />
       <% if(checklist.tasks.length > 0 ) { checklist.tasks.forEach((task)=>{%>
       <div class="columns">
-        <div class="column is-four-fifths">
-          <input type="checkbox" /> <%=task.name%>
+        <div class="column is-four-fifths <%= task.done ? 'has-text-success is-italic' : '' %>" >
+          <input type="checkbox" onchange="updateTask(this, '<%= task._id %>')" <%= task.done ? 'checked' : '' %> /> <%=task.name%>
         </div>
 
         <div class="column is-one-fifth">

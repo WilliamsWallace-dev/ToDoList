@@ -8,40 +8,48 @@ const checklist = require('../models/checklist.js');
 const router = express.Router();
 
 router.get('/', async (req,res)=>{
-    const checklists = await CheckList.find()
+   
     try {
+        const checklists = await CheckList.find()
         res.render('pages/checklist/index',{checklists : checklists})
     } catch (error) {
-        res.status(500).json(error)
+        let errors = error.errors
+        res.status(500).render('pages/error/index',{errors})
     }
 })
 
 router.get('/new', (req,res)=>{
+    let errors = null
     const checklist = new CheckList()
     try {
-        res.status(200).render('pages/checklist/newAndUpdate',{checklist : {...checklist}, url : '/checklist/?_method = post' ,type : "checklist"})
+        res.status(200).render('pages/checklist/newAndUpdate',{checklist : {...checklist}, url : '/checklist/?_method = post' ,type : "checklist",errors})
     } catch (error) {
-        console.log("errro no new")
-        res.status(400).send("error")
+        let errors = error.errors
+        res.status(400).render('pages/error/index',{errors})
     }
 })
 
-router.get('/edit/:id', async(req,res)=>{   
+router.get('/edit/:id', async(req,res)=>{  
+    let errors = null 
     try {
         const checklist = await CheckList.findById(req.params.id)
-        res.status(200).render('pages/checklist/newAndUpdate',{checklist : checklist ,url : `/checklist/${req.params.id}/?_method=put`,type : "checklist"})
+        res.status(200).render('pages/checklist/newAndUpdate',{checklist : checklist ,url : `/checklist/${req.params.id}/?_method=put`,type : "checklist",errors})
     } catch (error) {
-        res.status(422).json(error)
+        let errors = error.errors
+        res.status(422).render('pages/error/index',{errors})
+        // res.status(422).json(error)
     }
 })
 
 router.get('/show/:id', async (req,res)=>{
     try {
         const checklist = await CheckList.findById(req.params.id).populate('tasks')
-        console.log(checklist.tasks)
+        // console.log(checklist.tasks)
         res.status(200).render('pages/checklist/show',{checklist : checklist})
     } catch (error) {
-        res.status(400).json(error)
+        // res.status(400).json(error)
+        let errors = error.errors
+        res.status(400).render('pages/error/index',{errors})
     }
 })
 
@@ -51,7 +59,9 @@ router.get('/:id', async (req,res)=>{
         const checklist = await CheckList.findById(req.params.id)
         res.status(200).json(checklist)
     } catch (error) {
-        res.status(422).json(error)
+        // res.status(422).json(error)
+        let errors = error.errors
+        res.status(422).render('pages/error/index',{errors})
     }
 })
 
@@ -63,7 +73,11 @@ router.post('/', async (req,res)=>{
         await checklist.save()
         res.status(200).redirect('/checklist')
      } catch (error) {
-        res.status(422).json(error)
+        // res.status(422).json(error)
+        let errors = error.errors
+        res.status(422).render('pages/checklist/newAndUpdate',{checklist : {...checklist}, url : '/checklist/?_method = post' ,type : "checklist",errors})
+        // res.status(422).render('pages/error/index',{errors})
+        
      }
     // const {name} = req.body
     // let checklist = new CheckList({name})
@@ -83,7 +97,9 @@ router.put('/:id', async(req,res)=>{
         await CheckList.findByIdAndUpdate(req.params.id,{name})
         res.status(200).redirect('/checklist')
     } catch (error) {
-        res.status(422).json("error")
+        // res.status(422).json("error")
+        let errors = error.errors
+        res.status(422).render('pages/error/index',{errors})
     }
 })
 
@@ -93,7 +109,9 @@ router.delete('/:id', async (req,res)=>{
         await CheckList.findByIdAndRemove(req.params.id)
         res.status(200).redirect('/checklist')
     } catch (error) {
-        res.status(422).json("error")
+        // res.status(422).json("error")
+        let errors = error.errors
+        res.status(422).render('pages/error/index',{errors})
     }
 })
 
